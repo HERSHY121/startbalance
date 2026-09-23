@@ -66,12 +66,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const signIn = useCallback(async (email: string, password: string) => {
     if (!supabase) return { error: 'Sync is not configured.' }
     const { error } = await supabase.auth.signInWithPassword({ email, password })
+    if (!error) await supabase.auth.refreshSession()
     return { error: error?.message ?? null }
   }, [])
 
   const signUp = useCallback(async (email: string, password: string) => {
     if (!supabase) return { error: 'Sync is not configured.' }
     const { error } = await supabase.auth.signUp({ email, password })
+    if (!error) await supabase.auth.refreshSession()
     return { error: error?.message ?? null }
   }, [])
 

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { PhoneFrame } from './components/PhoneFrame'
 import { TabNav, type TabId } from './components/TabNav'
 import { HomeScreen } from './screens/HomeScreen'
@@ -7,6 +7,7 @@ import { CardScreen } from './screens/CardScreen'
 import { HelpScreen } from './screens/HelpScreen'
 import { SetBalanceScreen } from './screens/SetBalanceScreen'
 import { AddSpendModal } from './screens/AddSpendModal'
+import { AdminScreen } from './screens/AdminScreen'
 import { AuthScreen } from './screens/AuthScreen'
 import { AuthProvider, useAuth } from './hooks/useAuth'
 import { useLedger } from './hooks/useLedger'
@@ -26,6 +27,10 @@ function MainApp({
   const ledger = useLedger(userId)
   const [tab, setTab] = useState<TabId>('home')
   const [overlay, setOverlay] = useState<Overlay>('none')
+
+  useEffect(() => {
+    if (tab === 'admin' && !isAdmin) setTab('home')
+  }, [isAdmin, tab])
 
   const openSetBalance = () => setOverlay('setBalance')
   const openAddSpend = () => {
@@ -110,7 +115,6 @@ function MainApp({
                   ledger={ledger}
                   syncConfigured={syncConfigured}
                   signedInEmail={user?.email ?? null}
-                  signedInUserId={user?.id ?? null}
                   isAdmin={isAdmin}
                   onUpdateBalance={openSetBalance}
                   onReset={() => {
@@ -127,8 +131,11 @@ function MainApp({
                 />
               )}
               {tab === 'help' && <HelpScreen />}
+              {tab === 'admin' && isAdmin && (
+                <AdminScreen selfUserId={user?.id ?? null} />
+              )}
             </main>
-            <TabNav active={tab} onChange={setTab} />
+            <TabNav active={tab} onChange={setTab} showAdmin={isAdmin} />
             {overlay === 'addSpend' && (
               <AddSpendModal ledger={ledger} onClose={() => setOverlay('none')} />
             )}

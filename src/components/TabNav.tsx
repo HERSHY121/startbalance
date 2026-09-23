@@ -1,8 +1,9 @@
-export type TabId = 'home' | 'activity' | 'card' | 'help';
+export type TabId = 'home' | 'activity' | 'card' | 'help' | 'admin';
 
 type Props = {
   active: TabId;
   onChange: (tab: TabId) => void;
+  showAdmin?: boolean;
 };
 
 const tabs: { id: TabId; label: string; icon: string }[] = [
@@ -12,10 +13,14 @@ const tabs: { id: TabId; label: string; icon: string }[] = [
   { id: 'help', label: 'Help', icon: '?' },
 ];
 
-export function TabNav({ active, onChange }: Props) {
+export function TabNav({ active, onChange, showAdmin = false }: Props) {
+  const visibleTabs = showAdmin
+    ? [...tabs, { id: 'admin' as const, label: 'Admin', icon: '⚙' }]
+    : tabs;
+
   return (
-    <nav className="tab-nav" aria-label="Main">
-      {tabs.map((tab) => (
+    <nav className={`tab-nav${showAdmin ? ' has-admin' : ''}`} aria-label="Main">
+      {visibleTabs.map((tab) => (
         <button
           key={tab.id}
           type="button"

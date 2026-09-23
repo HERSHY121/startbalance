@@ -1,4 +1,3 @@
-import { AlphaAdminPanel } from '../components/AlphaAdminPanel'
 import { DisclaimerBadge } from '../components/DisclaimerBadge'
 import { formatMoney } from '../data/storage'
 import { appMeta } from '../data/helpContent'
@@ -8,7 +7,6 @@ type Props = {
   ledger: LedgerApi
   syncConfigured?: boolean
   signedInEmail?: string | null
-  signedInUserId?: string | null
   isAdmin?: boolean
   onUpdateBalance: () => void
   onReset: () => void
@@ -19,7 +17,6 @@ export function CardScreen({
   ledger,
   syncConfigured = false,
   signedInEmail = null,
-  signedInUserId = null,
   isAdmin = false,
   onUpdateBalance,
   onReset,
@@ -102,7 +99,9 @@ export function CardScreen({
       )}
 
       {isAdmin && syncConfigured && (
-        <AlphaAdminPanel selfUserId={signedInUserId} />
+        <p className="admin-discoverability-note" role="status">
+          You’re an alpha admin — manage testers from the Admin tab.
+        </p>
       )}
 
       {!syncConfigured && (

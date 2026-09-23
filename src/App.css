@@ -903,6 +903,10 @@
   flex-shrink: 0;
 }
 
+.tab-nav.has-admin {
+  grid-template-columns: repeat(5, 1fr);
+}
+
 .tab-btn {
   display: flex;
   flex-direction: column;
@@ -1165,4 +1169,14 @@
   .home-indicator {
     margin-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
   }
+}
+
+.admin-discoverability-note {
+  margin: 12px 0 0;
+  padding: 9px 12px;
+  border: 1px solid var(--green-200, #c5ddd4);
+  border-radius: var(--radius-sm);
+  background: #f4faf7;
+  color: var(--green-900);
+  font-size: 0.8125rem;
 }
