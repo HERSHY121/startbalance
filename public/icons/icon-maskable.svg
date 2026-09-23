@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="StartBalance">
+  <rect width="512" height="512" fill="#0f5c4c"/>
+  <g transform="translate(51.2 51.2) scale(0.8)">
+    <path fill="#e8f6f1" d="M256 64c-72 62-124 140-124 220 0 86 56 152 124 152s124-66 124-152c0-80-52-158-124-220z"/>
+    <g fill="#0f5c4c" transform="translate(256 268)">
+      <path d="M-52-78c0-38 28-66 70-66 18 0 34 6 46 16l-18 28c-8-6-18-10-28-10-18 0-30 12-30 32v18h52v30h-52v22c0 10 2 18 8 24h50v32H-78v-32c18-8 28-22 28-42v-4h-40v-30h40v-18z"/>
+    </g>
+  </g>
+</svg>
