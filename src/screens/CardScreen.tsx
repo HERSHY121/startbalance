@@ -1,16 +1,26 @@
-import { DisclaimerBadge } from '../components/DisclaimerBadge';
-import { formatMoney } from '../data/storage';
-import { appMeta } from '../data/helpContent';
-import type { LedgerApi } from '../hooks/useLedger';
+import { DisclaimerBadge } from '../components/DisclaimerBadge'
+import { formatMoney } from '../data/storage'
+import { appMeta } from '../data/helpContent'
+import type { LedgerApi } from '../hooks/useLedger'
 
 type Props = {
-  ledger: LedgerApi;
-  onUpdateBalance: () => void;
-  onReset: () => void;
-};
+  ledger: LedgerApi
+  syncConfigured?: boolean
+  signedInEmail?: string | null
+  onUpdateBalance: () => void
+  onReset: () => void
+  onSignOut?: () => void | Promise<void>
+}
 
-export function CardScreen({ ledger, onUpdateBalance, onReset }: Props) {
-  const remaining = ledger.state.remaining;
+export function CardScreen({
+  ledger,
+  syncConfigured = false,
+  signedInEmail = null,
+  onUpdateBalance,
+  onReset,
+  onSignOut,
+}: Props) {
+  const remaining = ledger.state.remaining
 
   return (
     <div className="screen card-screen">
@@ -44,7 +54,9 @@ export function CardScreen({ ledger, onUpdateBalance, onReset }: Props) {
           </div>
           <div>
             <span className="plastic-label">App storage</span>
-            <span className="plastic-value">This device</span>
+            <span className="plastic-value">
+              {syncConfigured && signedInEmail ? 'Synced + device' : 'This device'}
+            </span>
           </div>
         </div>
       </div>
@@ -57,6 +69,39 @@ export function CardScreen({ ledger, onUpdateBalance, onReset }: Props) {
         </p>
       </section>
 
+      {syncConfigured && (
+        <section className="info-panel account-panel">
+          <h2 className="panel-title">Account</h2>
+          <p className="panel-text">
+            {signedInEmail
+              ? `Signed in as ${signedInEmail}`
+              : 'Signed in — cloud sync ready once the ledgers table exists.'}
+          </p>
+          {onSignOut && (
+            <button
+              type="button"
+              className="btn btn-ghost"
+              onClick={() => {
+                void onSignOut()
+              }}
+            >
+              Sign out
+            </button>
+          )}
+        </section>
+      )}
+
+      {!syncConfigured && (
+        <section className="info-panel dev-note-inline" role="note">
+          <h2 className="panel-title">Sync not configured</h2>
+          <p className="panel-text">
+            Developer note: set <code>VITE_SUPABASE_URL</code> and{' '}
+            <code>VITE_SUPABASE_ANON_KEY</code> to enable sign-in and cloud
+            ledger. Local trial data still works.
+          </p>
+        </section>
+      )}
+
       <div className="home-actions">
         <button type="button" className="btn btn-primary" onClick={onUpdateBalance}>
           Update balance
@@ -65,7 +110,7 @@ export function CardScreen({ ledger, onUpdateBalance, onReset }: Props) {
           type="button"
           className="btn btn-ghost"
           onClick={() => {
-            if (window.confirm('Clear all tracked data on this device?')) onReset();
+            if (window.confirm('Clear all tracked data on this device?')) onReset()
           }}
         >
           Clear all data
@@ -87,5 +132,5 @@ export function CardScreen({ ledger, onUpdateBalance, onReset }: Props) {
         </button>
       </section>
     </div>
-  );
+  )
 }

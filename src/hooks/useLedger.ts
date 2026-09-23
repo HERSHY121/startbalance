@@ -1,44 +1,65 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   emptyState,
-  loadState,
-  saveState,
   todayISO,
   uid,
   totalSpent,
   statusFromRemaining,
   type AppState,
   type LedgerEntry,
-} from '../data/storage';
+} from '../data/storage'
+import { loadLedger, loadLocalLedger, saveLedger } from '../lib/ledger'
 
 function round2(n: number): number {
-  return Math.round(n * 100) / 100;
+  return Math.round(n * 100) / 100
 }
 
-export function useLedger() {
+export function useLedger(userId?: string | null) {
   const [state, setState] = useState<AppState>(() =>
-    typeof window !== 'undefined' ? loadState() : emptyState(),
-  );
+    typeof window !== 'undefined' ? loadLocalLedger() : emptyState(),
+  )
+  const [hydrated, setHydrated] = useState(false)
+  const skipNextSave = useRef(false)
 
   useEffect(() => {
-    saveState(state);
-  }, [state]);
+    let cancelled = false
+    setHydrated(false)
+    void (async () => {
+      const data = await loadLedger(userId)
+      if (cancelled) return
+      skipNextSave.current = true
+      setState(data)
+      setHydrated(true)
+    })()
+    return () => {
+      cancelled = true
+    }
+  }, [userId])
 
-  const spent = useMemo(() => totalSpent(state.entries), [state.entries]);
+  useEffect(() => {
+    if (!hydrated) return
+    if (skipNextSave.current) {
+      skipNextSave.current = false
+      return
+    }
+    void saveLedger(userId, state)
+  }, [state, userId, hydrated])
+
+  const spent = useMemo(() => totalSpent(state.entries), [state.entries])
   const status = useMemo(
     () => statusFromRemaining(state.remaining),
     [state.remaining],
-  );
+  )
 
   const setBalance = useCallback(
     (amount: number, opts?: { clearSpends?: boolean; asTopUp?: boolean }) => {
-      const now = new Date().toISOString();
-      const date = todayISO();
+      const now = new Date().toISOString()
+      const date = todayISO()
       setState((prev) => {
-        const entries = opts?.clearSpends ? [] : prev.entries;
-        let type: LedgerEntry['type'] = 'balance_check';
-        if (opts?.asTopUp) type = 'topup';
-        else if (prev.remaining === null || opts?.clearSpends) type = 'period_start';
+        const entries = opts?.clearSpends ? [] : prev.entries
+        let type: LedgerEntry['type'] = 'balance_check'
+        if (opts?.asTopUp) type = 'topup'
+        else if (prev.remaining === null || opts?.clearSpends) type = 'period_start'
 
         const entry: LedgerEntry = {
           id: uid(),
@@ -52,7 +73,7 @@ export function useLedger() {
               : type === 'period_start'
                 ? 'Starting balance'
                 : 'Balance checked and entered',
-        };
+        }
 
         return {
           remaining: round2(amount),
@@ -60,17 +81,17 @@ export function useLedger() {
           periodStartedAt:
             opts?.clearSpends || !prev.periodStartedAt ? now : prev.periodStartedAt,
           entries: [entry, ...entries],
-        };
-      });
+        }
+      })
     },
     [],
-  );
+  )
 
   const addSpend = useCallback((amount: number, merchant: string, date: string) => {
-    const now = new Date().toISOString();
-    const rounded = round2(amount);
+    const now = new Date().toISOString()
+    const rounded = round2(amount)
     setState((prev) => {
-      if (prev.remaining === null) return prev;
+      if (prev.remaining === null) return prev
       const entry: LedgerEntry = {
         id: uid(),
         type: 'spend',
@@ -78,39 +99,39 @@ export function useLedger() {
         merchant: merchant.trim() || 'Shop',
         date: date || todayISO(),
         createdAt: now,
-      };
+      }
       return {
         ...prev,
         remaining: round2(prev.remaining - rounded),
         entries: [entry, ...prev.entries],
-      };
-    });
-  }, []);
+      }
+    })
+  }, [])
 
   const deleteSpend = useCallback((id: string) => {
     setState((prev) => {
-      const entry = prev.entries.find((e) => e.id === id);
-      if (!entry || entry.type !== 'spend') return prev;
+      const entry = prev.entries.find((e) => e.id === id)
+      if (!entry || entry.type !== 'spend') return prev
       const remaining =
-        prev.remaining === null ? null : round2(prev.remaining + entry.amount);
+        prev.remaining === null ? null : round2(prev.remaining + entry.amount)
       return {
         ...prev,
         remaining,
         entries: prev.entries.filter((e) => e.id !== id),
-      };
-    });
-  }, []);
+      }
+    })
+  }, [])
 
   const recalculate = useCallback(() => {
-    setState((prev) => ({ ...prev }));
-  }, []);
+    setState((prev) => ({ ...prev }))
+  }, [])
 
   const resetAll = useCallback(() => {
-    setState(emptyState());
-  }, []);
+    setState(emptyState())
+  }, [])
 
   const loadDemo = useCallback(() => {
-    const now = new Date().toISOString();
+    const now = new Date().toISOString()
     setState({
       remaining: 42.5,
       lastCheckedAt: now,
@@ -157,8 +178,8 @@ export function useLedger() {
           note: 'Starting balance (demo)',
         },
       ],
-    });
-  }, []);
+    })
+  }, [])
 
   return {
     state,
@@ -171,7 +192,8 @@ export function useLedger() {
     resetAll,
     loadDemo,
     hasBalance: state.remaining !== null,
-  };
+    hydrated,
+  }
 }
 
-export type LedgerApi = ReturnType<typeof useLedger>;
+export type LedgerApi = ReturnType<typeof useLedger>

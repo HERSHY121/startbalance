@@ -12,7 +12,7 @@ Check the real balance by phone (**0118 338 5810**) or cashpoint, enter it here,
 3. After shopping, tap **Log a spend** so remaining stays useful.
 4. Optional: Add to Home Screen from your phone browser for app-like use.
 
-Data stays in this browser (`localStorage` key `startbalance-v1`). Nothing is sent to a server or the NHS.
+By default data stays in this browser (`localStorage` key `startbalance-v1`). Optional Supabase sync (when configured) stores the same JSON under your account. Nothing is sent to the NHS.
 
 ## Public trial URL
 
@@ -36,4 +36,12 @@ npm run build && npm run preview -- --host 0.0.0.0 --port 4173
 
 ## Stack
 
-Vite + React + TypeScript. Local storage only.
+Vite + React + TypeScript. Local storage by default; optional Supabase auth/sync.
+
+## Optional cloud sync (Supabase)
+
+1. Copy `.env.example` → `.env` and set `VITE_SUPABASE_URL` + `VITE_SUPABASE_ANON_KEY`.
+2. Create table `ledgers` (`user_id` uuid PK → auth.users, `data` jsonb, `updated_at` timestamptz) with RLS for the owner.
+3. Enable Email auth in Supabase.
+4. Rebuild / redeploy. Without env vars the trial keeps working locally (“Sync not configured”).
+

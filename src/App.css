@@ -1034,6 +1034,94 @@
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
 }
 
+
+/* —— Auth & sync —— */
+.dev-note {
+  margin: 12px 0 8px;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px dashed var(--green-700);
+  background: #fff8e8;
+  color: var(--ink);
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.dev-note code,
+.dev-note-inline code,
+.sync-banner code {
+  font-size: 0.8125rem;
+  background: rgba(26, 28, 27, 0.06);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.blurb-sync {
+  font-size: 0.875rem !important;
+  color: var(--green-800) !important;
+  margin-bottom: 8px !important;
+}
+
+.sync-banner {
+  flex-shrink: 0;
+  padding: 8px 16px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #6b5a1e;
+  background: #fff3cd;
+  border-bottom: 1px solid #e6d89a;
+  text-align: center;
+}
+
+.auth-screen {
+  padding-bottom: 32px;
+}
+
+.auth-loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  min-height: 60%;
+}
+
+.auth-switch {
+  margin: 20px 0 0;
+  text-align: center;
+  font-size: 0.9375rem;
+  color: var(--ink-muted);
+}
+
+.text-link {
+  appearance: none;
+  border: none;
+  background: none;
+  padding: 0;
+  color: var(--green-800);
+  font-weight: 650;
+  font-size: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.form-info {
+  margin: 0;
+  color: var(--green-800);
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.account-panel .btn {
+  margin-top: 8px;
+  width: 100%;
+}
+
+.dev-note-inline {
+  border: 1px dashed #c4a84a;
+  background: #fff8e8;
+}
+
 @media (max-width: 820px) {
   .desktop-blurb {
     display: none;
