@@ -83,8 +83,8 @@ export function AlphaAdminPanel({ selfUserId }: Props) {
   }
 
   return (
-    <section className="info-panel admin-panel" aria-label="Alpha admin">
-      <h2 className="panel-title">Alpha admin — delete tester accounts</h2>
+    <section className="info-panel admin-panel" aria-label="Admin">
+      <h2 className="panel-title">Admin — delete tester accounts</h2>
       <p className="panel-text">
         Friends &amp; family testers only. Deleting removes their cloud ledger and
         auth account.

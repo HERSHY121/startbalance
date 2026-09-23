@@ -1,9 +1,9 @@
 export const appMeta = {
   name: 'StartBalance',
-  stageName: 'StartBalance Alpha',
-  stageLabel: 'Alpha',
+  stageName: 'StartBalance',
+  stageLabel: '',
   tagline: 'Track your Healthy Start card balance',
-  disclaimer: 'Alpha · friends & family · not affiliated with NHS',
+  disclaimer: 'Friends & family · not affiliated with NHS',
   officialSite: 'https://www.healthystart.nhs.uk',
   phone: '0118 338 5810',
 };
@@ -42,6 +42,6 @@ export const helpTips = [
 
 /** Short blurb for friends/family trying the alpha build. */
 export const trialTesterBlurb = {
-  title: 'For alpha testers',
+  title: 'For friends & family',
   body: 'Check your real Healthy Start balance by phone (0118 338 5810) or at a cashpoint, then tap Enter balance and type that amount. After shopping, tap Log a spend so the remaining figure stays useful. Data stays on this phone only — not linked to NHS.',
 };

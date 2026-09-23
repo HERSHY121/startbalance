@@ -100,7 +100,7 @@ export function CardScreen({
 
       {isAdmin && syncConfigured && (
         <p className="admin-discoverability-note" role="status">
-          You’re an alpha admin — manage testers from the Admin tab.
+          You’re an admin — manage testers from the Admin tab.
         </p>
       )}
 
@@ -110,7 +110,7 @@ export function CardScreen({
           <p className="panel-text">
             Developer note: set <code>VITE_SUPABASE_URL</code> and{' '}
             <code>VITE_SUPABASE_ANON_KEY</code> to enable sign-in and cloud
-            ledger. Local alpha data still works.
+            ledger. Local data still works.
           </p>
         </section>
       )}

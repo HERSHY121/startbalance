@@ -57,7 +57,7 @@ function MainApp({
             <strong>Sync not configured.</strong> Add{' '}
             <code>VITE_SUPABASE_URL</code> and <code>VITE_SUPABASE_ANON_KEY</code>{' '}
             (see <code>.env.example</code>). Local ledger still works for this
-            alpha.
+            trial.
           </div>
         )}
         {syncConfigured && user?.email && (
@@ -72,7 +72,7 @@ function MainApp({
             setTab('home')
           }}
         >
-          Clear alpha data
+          Clear all data
         </button>
       </aside>
 
