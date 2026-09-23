@@ -33,7 +33,7 @@ function clickText(text) {
   }, text);
 }
 
-await page.goto('http://127.0.0.1:4173/', { waitUntil: 'networkidle0' });
+await page.goto('http://127.0.0.1:4174/startbalance/', { waitUntil: 'networkidle0' });
 await page.evaluate(() => localStorage.clear());
 await page.reload({ waitUntil: 'networkidle0' });
 await page.waitForSelector('.empty-hero', { timeout: 5000 });
