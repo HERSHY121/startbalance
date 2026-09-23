@@ -16,7 +16,7 @@ By default data stays in this browser (`localStorage` key `startbalance-v1`). Op
 
 ## Public trial URL
 
-**https://hershy121.github.io/startbalance/**
+**https://startbalance.github.io/startbalance/**
 
 ## Balance math
 
