@@ -1,7 +1,7 @@
 {
-  "name": "StartBalance",
+  "name": "StartBalance Alpha",
   "short_name": "StartBalance",
-  "description": "Trial companion to track your Healthy Start card balance. Not affiliated with NHS.",
+  "description": "Alpha companion to track your Healthy Start card balance. Friends & family · not affiliated with NHS.",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#0f5c4c",

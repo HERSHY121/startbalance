@@ -10,11 +10,21 @@ import {
 import type { Session, User } from '@supabase/supabase-js'
 import { isSupabaseConfigured, supabase } from '../lib/supabase'
 
+const ALPHA_ADMIN_EMAIL = 'hershy121@gmail.com'
+
+function computeIsAdmin(user: User | null): boolean {
+  if (!user) return false
+  const role = (user.app_metadata as { role?: string } | undefined)?.role
+  if (role === 'admin') return true
+  return user.email?.toLowerCase() === ALPHA_ADMIN_EMAIL
+}
+
 type AuthContextValue = {
   configured: boolean
   loading: boolean
   session: Session | null
   user: User | null
+  isAdmin: boolean
   signIn: (email: string, password: string) => Promise<{ error: string | null }>
   signUp: (email: string, password: string) => Promise<{ error: string | null }>
   signOut: () => Promise<void>
@@ -70,17 +80,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await supabase.auth.signOut()
   }, [])
 
+  const user = session?.user ?? null
+  const isAdmin = computeIsAdmin(user)
+
   const value = useMemo<AuthContextValue>(
     () => ({
       configured,
       loading,
       session,
-      user: session?.user ?? null,
+      user,
+      isAdmin,
       signIn,
       signUp,
       signOut,
     }),
-    [configured, loading, session, signIn, signUp, signOut],
+    [configured, loading, session, user, isAdmin, signIn, signUp, signOut],
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

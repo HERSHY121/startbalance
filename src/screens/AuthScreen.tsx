@@ -51,7 +51,7 @@ export function AuthScreen() {
     <div className="screen auth-screen">
       <header className="screen-header">
         <div>
-          <p className="app-kicker">{appMeta.name}</p>
+          <p className="app-kicker">{appMeta.stageName}</p>
           <h1 className="screen-title">
             {mode === 'signin' ? 'Sign in' : 'Create account'}
           </h1>

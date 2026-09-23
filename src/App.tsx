@@ -22,7 +22,7 @@ function MainApp({
   syncConfigured: boolean
   userId: string | null
 }) {
-  const { signOut, user } = useAuth()
+  const { signOut, user, isAdmin } = useAuth()
   const ledger = useLedger(userId)
   const [tab, setTab] = useState<TabId>('home')
   const [overlay, setOverlay] = useState<Overlay>('none')
@@ -39,7 +39,7 @@ function MainApp({
   return (
     <div className="app-root">
       <aside className="desktop-blurb">
-        <p className="blurb-brand">{appMeta.name}</p>
+        <p className="blurb-brand">{appMeta.stageName}</p>
         <h1>{appMeta.tagline}</h1>
         <p>
           A companion tracker for parents and carers. Check balance by phone (
@@ -52,7 +52,7 @@ function MainApp({
             <strong>Sync not configured.</strong> Add{' '}
             <code>VITE_SUPABASE_URL</code> and <code>VITE_SUPABASE_ANON_KEY</code>{' '}
             (see <code>.env.example</code>). Local ledger still works for this
-            trial.
+            alpha.
           </div>
         )}
         {syncConfigured && user?.email && (
@@ -67,7 +67,7 @@ function MainApp({
             setTab('home')
           }}
         >
-          Clear trial data
+          Clear alpha data
         </button>
       </aside>
 
@@ -110,6 +110,8 @@ function MainApp({
                   ledger={ledger}
                   syncConfigured={syncConfigured}
                   signedInEmail={user?.email ?? null}
+                  signedInUserId={user?.id ?? null}
+                  isAdmin={isAdmin}
                   onUpdateBalance={openSetBalance}
                   onReset={() => {
                     ledger.resetAll()
@@ -149,7 +151,7 @@ function AppGate() {
       <div className="app-root">
         <PhoneFrame>
           <div className="screen auth-screen auth-loading">
-            <p className="app-kicker">{appMeta.name}</p>
+            <p className="app-kicker">{appMeta.stageName}</p>
             <p className="panel-text">Checking sign-in…</p>
             <p className="muted-note">{appMeta.disclaimer}</p>
           </div>
@@ -162,7 +164,7 @@ function AppGate() {
     return (
       <div className="app-root">
         <aside className="desktop-blurb">
-          <p className="blurb-brand">{appMeta.name}</p>
+          <p className="blurb-brand">{appMeta.stageName}</p>
           <h1>{appMeta.tagline}</h1>
           <p>
             Sign in to sync your ledger. Card balance checks still use phone (

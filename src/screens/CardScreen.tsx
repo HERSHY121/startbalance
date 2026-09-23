@@ -1,3 +1,4 @@
+import { AlphaAdminPanel } from '../components/AlphaAdminPanel'
 import { DisclaimerBadge } from '../components/DisclaimerBadge'
 import { formatMoney } from '../data/storage'
 import { appMeta } from '../data/helpContent'
@@ -7,6 +8,8 @@ type Props = {
   ledger: LedgerApi
   syncConfigured?: boolean
   signedInEmail?: string | null
+  signedInUserId?: string | null
+  isAdmin?: boolean
   onUpdateBalance: () => void
   onReset: () => void
   onSignOut?: () => void | Promise<void>
@@ -16,6 +19,8 @@ export function CardScreen({
   ledger,
   syncConfigured = false,
   signedInEmail = null,
+  signedInUserId = null,
+  isAdmin = false,
   onUpdateBalance,
   onReset,
   onSignOut,
@@ -34,7 +39,12 @@ export function CardScreen({
 
       <div className="plastic-card">
         <div className="plastic-top">
-          <span className="plastic-brand">{appMeta.name}</span>
+          <span className="plastic-brand-row">
+            <span className="plastic-brand">{appMeta.name}</span>
+            {appMeta.stageLabel && (
+              <span className="plastic-stage">{appMeta.stageLabel}</span>
+            )}
+          </span>
           <span className="card-status status-active">
             {ledger.hasBalance ? 'Tracking' : 'Not set up'}
           </span>
@@ -91,13 +101,17 @@ export function CardScreen({
         </section>
       )}
 
+      {isAdmin && syncConfigured && (
+        <AlphaAdminPanel selfUserId={signedInUserId} />
+      )}
+
       {!syncConfigured && (
         <section className="info-panel dev-note-inline" role="note">
           <h2 className="panel-title">Sync not configured</h2>
           <p className="panel-text">
             Developer note: set <code>VITE_SUPABASE_URL</code> and{' '}
             <code>VITE_SUPABASE_ANON_KEY</code> to enable sign-in and cloud
-            ledger. Local trial data still works.
+            ledger. Local alpha data still works.
           </p>
         </section>
       )}
