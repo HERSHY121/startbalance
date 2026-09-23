@@ -1,6 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <rect width="100" height="100" rx="22" fill="#0f5c4c"/>
-  <path fill="#d4efe6" d="M50 18c-14 10-22 24-22 38 0 14 10 24 22 24s22-10 22-24c0-14-8-28-22-38z"/>
-  <path stroke="#d4efe6" stroke-width="5" stroke-linecap="round" d="M50 42v36"/>
-  <text x="50" y="58" text-anchor="middle" font-size="28" font-family="system-ui,sans-serif" font-weight="700" fill="#0f5c4c">£</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="StartBalance">
+  <rect width="512" height="512" fill="#0f5c4c"/>
+  <path fill="#e8f6f1" d="M256 64c-72 62-124 140-124 220 0 86 56 152 124 152s124-66 124-152c0-80-52-158-124-220z"/>
+  <!-- Pound drawn as paths so it stays crisp without font fallback -->
+  <g fill="#0f5c4c" transform="translate(256 268)">
+    <path d="M-52-78c0-38 28-66 70-66 18 0 34 6 46 16l-18 28c-8-6-18-10-28-10-18 0-30 12-30 32v18h52v30h-52v22c0 10 2 18 8 24h50v32H-78v-32c18-8 28-22 28-42v-4h-40v-30h40v-18z"/>
+  </g>
 </svg>
