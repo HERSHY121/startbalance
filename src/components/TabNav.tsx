@@ -1,4 +1,4 @@
-export type TabId = 'home' | 'activity' | 'card' | 'help' | 'admin';
+export type TabId = 'home' | 'activity' | 'recipes' | 'card' | 'help' | 'admin';
 
 type Props = {
   active: TabId;
@@ -9,6 +9,7 @@ type Props = {
 const tabs: { id: TabId; label: string; icon: string }[] = [
   { id: 'home', label: 'Home', icon: '⌂' },
   { id: 'activity', label: 'Activity', icon: '☰' },
+  { id: 'recipes', label: 'Recipes', icon: '✦' },
   { id: 'card', label: 'Card', icon: '▭' },
   { id: 'help', label: 'Help', icon: '?' },
 ];

@@ -5,6 +5,7 @@ import { HomeScreen } from './screens/HomeScreen'
 import { ActivityScreen } from './screens/ActivityScreen'
 import { CardScreen } from './screens/CardScreen'
 import { HelpScreen } from './screens/HelpScreen'
+import { RecipesScreen } from './screens/RecipesScreen'
 import { SetBalanceScreen } from './screens/SetBalanceScreen'
 import { AddSpendModal } from './screens/AddSpendModal'
 import { AdminScreen } from './screens/AdminScreen'
@@ -131,6 +132,7 @@ function MainApp({
                 />
               )}
               {tab === 'help' && <HelpScreen />}
+              {tab === 'recipes' && <RecipesScreen />}
               {tab === 'admin' && isAdmin && (
                 <AdminScreen selfUserId={user?.id ?? null} />
               )}
