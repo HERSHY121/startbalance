@@ -4,6 +4,8 @@ export const appMeta = {
   stageLabel: '',
   tagline: 'Track your Healthy Start card balance',
   disclaimer: 'Friends & family · not affiliated with NHS',
+  roadmapNotice:
+    'Today you enter the balance once and track spends. We’re working on official live balance updates so the app can stay in sync for you.',
   officialSite: 'https://www.healthystart.nhs.uk',
   phone: '0118 338 5810',
 };

@@ -59,6 +59,10 @@ export function HomeScreen({
             Load demo data
           </button>
         </section>
+        <section className="info-panel" aria-label="What’s next">
+          <h2 className="panel-title">What’s next</h2>
+          <p className="panel-text">{appMeta.roadmapNotice}</p>
+        </section>
       </div>
     );
   }
@@ -121,6 +125,11 @@ export function HomeScreen({
         <p className="muted-note" style={{ marginTop: 10 }}>
           Spent this period: {formatMoney(spent)}
         </p>
+      </section>
+
+      <section className="info-panel" aria-label="What’s next">
+        <h2 className="panel-title">What’s next</h2>
+        <p className="panel-text">{appMeta.roadmapNotice}</p>
       </section>
     </div>
   );
